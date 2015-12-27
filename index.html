@@ -1,6 +1,37 @@
 <html>
-  <head></head>
+  <head>
+    <style>
+     canvas {
+       border: 1px solid red;
+     }
+     a {
+       cursor: pointer;
+       decoration: none;
+     }
+     #cropper {
+       width: 400px;
+       height: 400px;
+       border: 1px solid black;
+       z-index: 2;
+       position: absolute;
+       top: 15px;
+       left: 50px;
+     }
+     #container {
+       position: relative;
+       overflow: hidden;
+       display: inline-block;
+     }
+    </style>
+  </head>
   <body>
+    <div id="container">
+      <canvas id="canvas" width="300" height="300"></canvas>
+      <div id="cropper" draggable="true"></div>
+    </div>
+    <canvas id="dest"></canvas>
+    <button id="crop">Crop</button>
+    <a id="download">Download</a>
     <script src="build/bundle.js"></script>
   </body>
 </html>
