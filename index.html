@@ -11,11 +11,11 @@
      #cropper {
        width: 400px;
        height: 400px;
-       border: 1px solid black;
+       border: 1px dashed white;
        z-index: 2;
        position: absolute;
-       top: 15px;
-       left: 50px;
+       top: 0;
+       left: 0;
      }
      #container {
        position: relative;
@@ -25,13 +25,19 @@
     </style>
   </head>
   <body>
-    <div id="container">
-      <canvas id="canvas" width="300" height="300"></canvas>
-      <div id="cropper" draggable="true"></div>
-    </div>
-    <canvas id="dest"></canvas>
-    <button id="crop">Crop</button>
-    <a id="download">Download</a>
+      <input type="file" id="fileUpload">
+      <div id="container">
+        <canvas id="source" width="600" height="600"></canvas>
+        <div id="cropper"></div>
+      </div>
+      <canvas id="dest"></canvas>
+      <div>
+        <label for="cropHeight">crop height</label>
+        <input type="text" id="cropHeight">
+        <label for="cropWidth">crop width</label>
+        <input type="text" id="cropWidth">
+        <a id="download">Download</a>
+      </div>
     <script src="build/bundle.js"></script>
   </body>
 </html>

@@ -1,63 +1,81 @@
+import $ from 'jquery';
+import _ from 'jquery-ui/draggable';
+
 let link = document.getElementById('download');
-let cropBtn = document.getElementById('crop');
 let destCanvas = document.getElementById('dest');
 let cropper = document.getElementById('cropper');
-let srcCanvas = document.getElementById('canvas');
-let container = document.getElementById('container');
+let srcCanvas = document.getElementById('source');
 
-let context = srcCanvas.getContext('2d');
+$('#cropper')
+  .draggable({containment: '#container', drag: () => {crop(cropper, img);}});
+
+let config = {
+  width: 400,
+  height: 400
+};
+
+destCanvas.height = 400;
+destCanvas.width = 400;
+let destCtx = destCanvas.getContext('2d');
+
+document.getElementById('cropHeight')
+  .addEventListener('change', e => {
+    cropper.style.height = destCanvas.height = config.height = Number(e.target.value);
+  });
+document.getElementById('cropWidth')
+  .addEventListener('change', e => {
+    cropper.style.width = destCanvas.width = config.width = Number(e.target.value);
+  });
 
 let getValueProperty = (style, prop) => {
   return parseInt(style.getPropertyValue(prop), 10);
 };
-
-cropper.addEventListener('dragstart', e => {
-  let style = window.getComputedStyle(e.target, null);
-  let obj = {
-    left: getValueProperty(style, 'left') - e.clientX,
-    top: getValueProperty(style, 'top') - e.clientY
-  };
-  e.dataTransfer.setData('text', JSON.stringify(obj));
-});
-
-container.addEventListener('dragover', e => {
-  e.preventDefault();
-});
-
-container.addEventListener('drop', e => {
-  let offset = JSON.parse(e.dataTransfer.getData('text/plain'));
-  cropper.style.left = (e.clientX + offset.left) + 'px';
-  cropper.style.top = (e.clientY + offset.top) + 'px';
-  e.preventDefault();
-  crop();
-});
-
-cropper.addEventListener('drag', e => {
-});
 
 link.addEventListener('click', () => {
   link.href = destCanvas.toDataURL();
   link.download = 'crop.png';
 });
 
-let crop = () => {
+let crop = (cropper, image) => {
   let style = window.getComputedStyle(cropper, null);
   let top = getValueProperty(style, 'top');
   let left = getValueProperty(style, 'left');
-  destCtx.drawImage(img, left, top, 400, 400, 0, 0, 400, 400);
+  destCtx.clearRect(0, 0, config.width, config.height);
+  destCtx.drawImage(image, left, top, config.width, config.height, 0, 0,
+                    config.width, config.height);
 };
-
-cropBtn.addEventListener('click', crop);
-
-destCanvas.height = 400;
-destCanvas.width = 400;
-let destCtx = destCanvas.getContext('2d');
 
 let img = new Image();
 img.src = 'demo.jpg';
 img.onload = () => {
   srcCanvas.width = img.naturalWidth;
   srcCanvas.height = img.naturalHeight;
-  context.drawImage(img, 0, 0);
+  srcCanvas
+    .getContext('2d')
+    .drawImage(img, 0, 0);
+  crop(cropper, img);
 };
+
+
+document.getElementById('fileUpload')
+  .addEventListener('change', (e) => {
+    let file = document.querySelector('input[type=file]').files[0];
+    let reader = new FileReader();
+    reader.onloadend = () => {
+      img.src = reader.result;
+      img.onload = () => {
+        srcCanvas.width = img.naturalWidth;
+        srcCanvas.height = img.naturalHeight;
+        srcCanvas
+          .getContext('2d')
+          .drawImage(img, 0, 0);
+        crop(cropper, img);
+      };
+    };
+
+    if (file) {
+      console.log('file fond');
+      reader.readAsDataURL(file);
+    }
+  });
 
