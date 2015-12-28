@@ -9,12 +9,10 @@
        decoration: none;
      }
      #cropper {
-       width: 400px;
-       height: 400px;
-       border: 1px dashed white;
+       border: 1px dashed black;
        z-index: 2;
        position: absolute;
-       top: 0;
+       top: 10px;
        left: 0;
      }
      #container {
@@ -25,19 +23,21 @@
     </style>
   </head>
   <body>
-      <input type="file" id="fileUpload">
+    <div id="app">
+      <input type="file" @change="fileUpload">
       <div id="container">
-        <canvas id="source" width="600" height="600"></canvas>
-        <div id="cropper"></div>
+        <canvas id="source" :style="srcCanvasStyle"></canvas>
+        <div id="cropper" :style="{width: config.width, height: config.height}"></div>
       </div>
-      <canvas id="dest"></canvas>
+      <canvas id="dest" :style="{width: config.width, height: config.height}"></canvas>
       <div>
-        <label for="cropHeight">crop height</label>
-        <input type="text" id="cropHeight">
-        <label for="cropWidth">crop width</label>
-        <input type="text" id="cropWidth">
-        <a id="download">Download</a>
+        <label for="cropHeight">Crop height</label>
+        <input type="text" id="cropHeight" v-model="config.height">
+        <label for="cropWidth">Crop width</label>
+        <input type="text" id="cropWidth" v-model="config.width">
+        <a @click="download" id="download">Download</a>
       </div>
+    </div>
     <script src="build/bundle.js"></script>
   </body>
 </html>
