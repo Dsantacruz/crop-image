@@ -6,6 +6,7 @@ rm -rf out || exit 0;
 mkdir out
 
 cp index.html out/
+npm run deploy
 cp -R build out
 
 
