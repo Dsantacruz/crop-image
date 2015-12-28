@@ -12,7 +12,7 @@
        border: 1px dashed black;
        z-index: 2;
        position: absolute;
-       top: 10px;
+       top: 0;
        left: 0;
      }
      #container {
@@ -24,6 +24,7 @@
   </head>
   <body>
     <div id="app">
+      <div>I know I need to add some style :(</div>
       <input type="file" @change="fileUpload">
       <div id="container">
         <canvas id="source" :style="srcCanvasStyle"></canvas>
