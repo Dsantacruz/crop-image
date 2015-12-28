@@ -28,15 +28,15 @@
       <input type="file" @change="fileUpload">
       <div id="container">
         <canvas id="source" :style="srcCanvasStyle"></canvas>
-        <div id="cropper" :style="{width: config.width, height: config.height}"></div>
+        <div id="cropper" :style="config"></div>
       </div>
-      <canvas id="dest" :style="{width: config.width, height: config.height}"></canvas>
+      <canvas id="dest" :style="config"></canvas>
       <div>
         <label for="cropHeight">Crop height</label>
         <input type="text" id="cropHeight" v-model="config.height">
         <label for="cropWidth">Crop width</label>
         <input type="text" id="cropWidth" v-model="config.width">
-        <a @click="download" id="download">Download</a>
+        <a @click="download">Download</a>
       </div>
     </div>
     <script src="build/bundle.js"></script>

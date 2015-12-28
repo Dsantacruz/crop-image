@@ -17,7 +17,6 @@ let vm = new Vue({
 
   ready() {
     this.img = new Image();
-    this.link = document.getElementById('download');
     this.srcCanvas = document.getElementById('source');
     this.destCanvas = document.getElementById('dest');
     this.destCtx = this.destCanvas.getContext('2d');
@@ -61,9 +60,9 @@ let vm = new Vue({
 
     },
 
-    download() {
-      this.link.href = this.destCanvas.toDataURL();
-      this.link.download = 'crop.png';
+    download(e) {
+      e.target.href = this.destCanvas.toDataURL();
+      e.target.download = 'crop.png';
     }
 
   }
