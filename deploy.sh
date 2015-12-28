@@ -1,6 +1,18 @@
 #!/bin/bash
 
-echo "deploy"
+set -e
 
-git checkout gh-pages
-git merge master
+rm -rf out || exit 0;
+mkdir out
+
+cp index.html out/
+cp -R build out
+
+git init
+git config user.name "juancjara"
+git config user.email "juanc.jara@pucp.pe"
+
+git add .
+git commit -m "deploy gh pages"
+
+git push --force --quiet "https//${GH_TOKEN}@${GH_REF}" master:gh-pages > dev/null 2>&1
