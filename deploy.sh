@@ -5,9 +5,10 @@ set -e
 rm -rf out || exit 0;
 mkdir out
 
+npm install
+npm run deploy
 cp index.html out/
 cp -R build out
-
 
 cd out
 git init
