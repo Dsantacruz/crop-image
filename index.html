@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <style>
+     canvas {
+       border: 1px solid red;
+     }
+     a {
+       cursor: pointer;
+       decoration: none;
+     }
+     #cropper {
+       border: 1px dashed black;
+       z-index: 2;
+       position: absolute;
+       top: 0;
+       left: 0;
+     }
+     #container {
+       position: relative;
+       overflow: hidden;
+       display: inline-block;
+     }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <img src="https://travis-ci.org/juancjara/crop-image.svg?branch=master"
+        alt="Build Status"/>
+      <h4>I know I need to add some style :(</h4>
+      <input type="file" @change="fileUpload">
+      <div id="container">
+        <canvas id="source" :style="srcCanvasStyle"></canvas>
+        <div id="cropper" :style="config"></div>
+      </div>
+      <canvas id="dest" :style="config"></canvas>
+      <div>
+        <label for="cropHeight">Crop height:</label>
+        <input type="text" id="cropHeight" v-model="config.height">
+        <label for="cropWidth">Crop width:</label>
+        <input type="text" id="cropWidth" v-model="config.width">
+        <a @click="download">Download</a>
+      </div>
+    </div>
+    <script src="build/bundle.js"></script>
+  </body>
+</html>
